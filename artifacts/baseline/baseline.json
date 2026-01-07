@@ -1,592 +1,592 @@
 {
-  "dataset": "liar",
-  "n_train": 10188,
-  "n_test": 1268,
-  "n_valid": 1278,
-  "feature_dim": 98200,
+  "dataset": "combined",
+  "n_train": 46097,
+  "n_test": 11525,
+  "n_valid": 0,
+  "feature_dim": 550000,
   "models": {
     "logreg": {
       "metrics": {
-        "accuracy": 0.6222397476340694,
-        "precision": 0.6406976744186047,
-        "recall": 0.7642163661581137,
-        "f1": 0.6970271979759646,
-        "roc_auc": 0.673495830237812,
-        "avg_precision": 0.719245856559436
+        "accuracy": 0.9072451193058568,
+        "precision": 0.895346855292313,
+        "recall": 0.9202873160476525,
+        "f1": 0.907645788336933,
+        "roc_auc": 0.9799344561809809,
+        "avg_precision": 0.9802022837330537
       },
       "confusion_matrix": [
         [
-          238,
-          309
+          5203,
+          614
         ],
         [
-          170,
-          551
+          455,
+          5253
         ]
       ],
       "classification_report": {
         "0": {
-          "precision": 0.5833333333333334,
-          "recall": 0.4351005484460695,
-          "f1-score": 0.49842931937172785,
-          "support": 547.0
+          "precision": 0.9195828914810887,
+          "recall": 0.8944473096097645,
+          "f1-score": 0.9068409586056645,
+          "support": 5817.0
         },
         "1": {
-          "precision": 0.6406976744186047,
-          "recall": 0.7642163661581137,
-          "f1-score": 0.6970271979759646,
-          "support": 721.0
+          "precision": 0.895346855292313,
+          "recall": 0.9202873160476525,
+          "f1-score": 0.907645788336933,
+          "support": 5708.0
         },
-        "accuracy": 0.6222397476340694,
+        "accuracy": 0.9072451193058568,
         "macro avg": {
-          "precision": 0.612015503875969,
-          "recall": 0.5996584573020916,
-          "f1-score": 0.5977282586738462,
-          "support": 1268.0
+          "precision": 0.9074648733867008,
+          "recall": 0.9073673128287085,
+          "f1-score": 0.9072433734712988,
+          "support": 11525.0
         },
         "weighted avg": {
-          "precision": 0.6159513853226714,
-          "recall": 0.6222397476340694,
-          "f1-score": 0.6113544538146732,
-          "support": 1268.0
+          "precision": 0.907579481974318,
+          "recall": 0.9072451193058568,
+          "f1-score": 0.9072395675519622,
+          "support": 11525.0
         }
       },
       "top_features": {
         "positive_real": [
           [
-            "word_body:than",
-            1.1830908340149944
+            "word_body:reuters",
+            211.2466728475956
           ],
           [
-            "word_body:more",
-            0.9998835878468185
+            "char_body: - ",
+            206.963166809707
+          ],
+          [
+            "char_body:’s ",
+            69.7064712148198
+          ],
+          [
+            "char_body:) -",
+            34.086622146079044
+          ],
+          [
+            "word_body:minister",
+            14.062620541475562
+          ],
+          [
+            "char_body:s) - ",
+            10.732782201826367
+          ],
+          [
+            "char_body:s) ",
+            7.723083122554148
+          ],
+          [
+            "word_body:region",
+            6.883772225668692
+          ],
+          [
+            "char_body:...",
+            6.268137514460592
+          ],
+          [
+            "word_body:than",
+            6.141637088834791
           ],
           [
             "word_body:since",
-            0.9175366973943208
+            5.161021968513658
           ],
           [
-            "word_body:of",
-            0.8394394029231714
+            "word_title:factbox",
+            5.034141217888146
           ],
           [
-            "word_body:and",
-            0.7297134235910553
+            "word_body:he said",
+            4.547837564319375
           ],
           [
-            "word_body:000",
-            0.7111720226758605
-          ],
-          [
-            "word_body:percent",
-            0.690783938472086
-          ],
-          [
-            "word_body:day",
-            0.6807662553673384
-          ],
-          [
-            "word_body:georgia",
-            0.6428600650738884
-          ],
-          [
-            "word_body:he",
-            0.6422409012995828
+            "word_body:the country",
+            3.8041109417022856
           ],
           [
             "word_body:countries",
-            0.6312561445595812
+            3.7610406316953213
           ],
           [
-            "word_body:more than",
-            0.616189879442948
+            "word_body:said on",
+            3.5470532098816916
           ],
           [
-            "word_body:average",
-            0.6049700283895099
-          ],
-          [
-            "word_body:debt",
-            0.5865615404046358
-          ],
-          [
-            "word_body:three",
-            0.5812242064447621
-          ],
-          [
-            "word_body:times",
-            0.5710039117937473
-          ],
-          [
-            "word_body:has",
-            0.5660365635380276
+            "word_title:china",
+            3.3919959599200697
           ],
           [
             "word_body:still",
-            0.5571503097861354
+            3.367159941112788
           ],
           [
-            "word_body:million",
-            0.5340601161936183
+            "char_body:mil",
+            3.1252560022889786
           ],
           [
-            "word_body:american",
-            0.5143865408789834
+            "word_body:of",
+            3.1095585534737356
           ],
           [
-            "word_body:half",
-            0.5106088713075851
+            "word_title:says",
+            3.09358916951733
           ],
           [
-            "word_body:every",
-            0.5081738595248971
+            "word_body:georgia",
+            3.069430350137144
           ],
           [
-            "word_body:percent of",
-            0.5079485263150861
-          ],
-          [
-            "word_body:of the",
-            0.49145932923589325
-          ],
-          [
-            "word_body:cut",
-            0.4889451665107565
-          ],
-          [
-            "word_body:60",
-            0.4852943951270316
+            "word_body:average",
+            3.056561507431569
           ],
           [
             "word_body:in",
-            0.47188271892930755
+            2.9423094937733647
           ],
           [
-            "word_body:ohio",
-            0.44654766018858943
+            "word_body:day",
+            2.920852978316326
           ],
           [
-            "word_body:up to",
-            0.43803166267542976
+            "word_body:said",
+            2.628465568335136
           ],
           [
-            "char_body:than",
-            0.43311040540438783
+            "word_body:cut",
+            2.5946042302897983
+          ],
+          [
+            "word_body:000",
+            2.5698085840861604
+          ],
+          [
+            "word_body:sen obama",
+            2.5142227392230727
+          ],
+          [
+            "word_body:terms",
+            2.5037986293502374
           ]
         ],
         "negative_fake": [
           [
-            "word_body:obama",
-            -0.6986590423951802
+            "char_body: s ",
+            -81.73500845297326
           ],
           [
-            "word_body:wisconsin",
-            -0.6272923390931309
+            "char_body:.th",
+            -75.19424263403266
+          ],
+          [
+            "word_body:via",
+            -55.34955948755274
+          ],
+          [
+            "word_title:video",
+            -32.932120944299015
+          ],
+          [
+            "char_body:n t ",
+            -23.938048035284865
+          ],
+          [
+            "word_body:image",
+            -21.764292237418008
+          ],
+          [
+            "word_body:read more",
+            -20.11285811680328
+          ],
+          [
+            "char_body: t ",
+            -19.34238008347087
+          ],
+          [
+            "word_body:wire",
+            -13.564989868586457
+          ],
+          [
+            "word_title:breaking",
+            -13.348512715279849
+          ],
+          [
+            "word_title:hillary",
+            -12.039312436332583
+          ],
+          [
+            "char_body:.the ",
+            -11.964056491671895
+          ],
+          [
+            "word_body:com",
+            -11.16798198049874
+          ],
+          [
+            "word_title:the",
+            -10.025788395211782
+          ],
+          [
+            "word_title:trump",
+            -8.475807545768268
+          ],
+          [
+            "word_title:watch",
+            -8.230203203656933
+          ],
+          [
+            "word_body:news",
+            -7.99113334336637
+          ],
+          [
+            "word_title:obama",
+            -7.314562083904278
+          ],
+          [
+            "char_body:, 20",
+            -7.0073426521128255
+          ],
+          [
+            "word_title:us",
+            -6.3856827820800985
+          ],
+          [
+            "word_title:and",
+            -6.28691260332336
+          ],
+          [
+            "word_body:story",
+            -6.280501426161566
+          ],
+          [
+            "word_title:is",
+            -5.743682741668017
+          ],
+          [
+            "word_title:just",
+            -5.329594969780712
+          ],
+          [
+            "word_body:how",
+            -5.314849739643722
+          ],
+          [
+            "word_title:you",
+            -5.258389432908015
           ],
           [
             "word_body:your",
-            -0.60524923606392
+            -4.850969321773714
           ],
           [
-            "word_body:to",
-            -0.5940365857839448
+            "word_body:21wire",
+            -4.8267864624839705
           ],
           [
-            "word_body:care",
-            -0.5764573325340249
+            "word_title:to",
+            -4.544985391464183
           ],
           [
-            "word_body:will",
-            -0.5525127457439877
-          ],
-          [
-            "word_body:america",
-            -0.5508610972332366
-          ],
-          [
-            "word_body:obamacare",
-            -0.5470404704134585
-          ],
-          [
-            "word_body:walker",
-            -0.5466792694276338
-          ],
-          [
-            "word_body:scott walker",
-            -0.5398865966070325
-          ],
-          [
-            "word_body:says",
-            -0.4982804004312501
-          ],
-          [
-            "word_body:rep",
-            -0.4927173325117729
-          ],
-          [
-            "word_body:no",
-            -0.49267126938162403
-          ],
-          [
-            "word_body:plan",
-            -0.48518098206478427
-          ],
-          [
-            "word_body:government",
-            -0.48239829715293797
-          ],
-          [
-            "word_body:care law",
-            -0.4815076550426744
-          ],
-          [
-            "word_body:white",
-            -0.4771669456581004
-          ],
-          [
-            "word_body:stimulus",
-            -0.47201858559371973
-          ],
-          [
-            "word_body:scott",
-            -0.46582297815135215
-          ],
-          [
-            "word_body:be",
-            -0.46315977868938
-          ],
-          [
-            "char_body:ama",
-            -0.4622997605488709
-          ],
-          [
-            "word_body:has been",
-            -0.45163776365222036
-          ],
-          [
-            "word_body:president",
-            -0.44338939797041377
-          ],
-          [
-            "char_body:car",
-            -0.44075008327809667
-          ],
-          [
-            "word_body:obamas",
-            -0.43773992838349407
-          ],
-          [
-            "word_body:is",
-            -0.43748480171394877
-          ],
-          [
-            "word_body:them",
-            -0.42450710150130105
-          ],
-          [
-            "char_body:obama",
-            -0.4242751249485216
-          ],
-          [
-            "char_body:obam",
-            -0.4242751249485216
-          ],
-          [
-            "char_body:oba",
-            -0.4220946126133844
+            "word_title:boiler room",
+            -4.4517176020677525
           ]
         ]
       }
     },
     "linear_svm": {
       "metrics": {
-        "accuracy": 0.6317034700315457,
-        "precision": 0.6449771689497716,
-        "recall": 0.7836338418862691,
-        "f1": 0.7075767063243582,
-        "roc_auc": 0.6722863583231699,
-        "avg_precision": 0.720221956776065
+        "accuracy": 0.9116702819956616,
+        "precision": 0.9036144578313253,
+        "recall": 0.9197617379117029,
+        "f1": 0.9116166001041848,
+        "roc_auc": 0.9812410077077566,
+        "avg_precision": 0.9812399689052396
       },
       "confusion_matrix": [
         [
-          236,
-          311
+          5257,
+          560
         ],
         [
-          156,
-          565
+          458,
+          5250
         ]
       ],
       "classification_report": {
         "0": {
-          "precision": 0.6020408163265306,
-          "recall": 0.43144424131627057,
-          "f1-score": 0.5026624068157615,
-          "support": 547.0
+          "precision": 0.9198600174978128,
+          "recall": 0.9037304452466908,
+          "f1-score": 0.9117238987166146,
+          "support": 5817.0
         },
         "1": {
-          "precision": 0.6449771689497716,
-          "recall": 0.7836338418862691,
-          "f1-score": 0.7075767063243582,
-          "support": 721.0
+          "precision": 0.9036144578313253,
+          "recall": 0.9197617379117029,
+          "f1-score": 0.9116166001041848,
+          "support": 5708.0
         },
-        "accuracy": 0.6317034700315457,
+        "accuracy": 0.9116702819956616,
         "macro avg": {
-          "precision": 0.6235089926381512,
-          "recall": 0.6075390416012698,
-          "f1-score": 0.6051195565700598,
-          "support": 1268.0
+          "precision": 0.911737237664569,
+          "recall": 0.9117460915791968,
+          "f1-score": 0.9116702494103996,
+          "support": 11525.0
         },
         "weighted avg": {
-          "precision": 0.6264549411225533,
-          "recall": 0.6317034700315457,
-          "f1-score": 0.6191791339022743,
-          "support": 1268.0
+          "precision": 0.9118140604846838,
+          "recall": 0.9116702819956616,
+          "f1-score": 0.911670756809478,
+          "support": 11525.0
         }
       },
       "top_features": {
         "positive_real": [
           [
-            "word_body:than",
-            0.676588543053443
+            "word_body:reuters",
+            2.429554435459317
           ],
           [
-            "word_body:since",
-            0.6030264269552604
+            "char_body:’s ",
+            1.2944006290051906
           ],
           [
-            "word_body:more",
-            0.5645379273586438
+            "char_body: - ",
+            1.2741079254204486
           ],
           [
-            "word_body:countries",
-            0.5419252914757401
+            "char_body:reut",
+            1.0844409750379471
           ],
           [
-            "word_body:day",
-            0.5279886984382679
+            "char_body:eut",
+            1.080510129546433
           ],
           [
-            "word_body:of",
-            0.5051896718399495
+            "char_body:reute",
+            1.0801166769520054
           ],
           [
-            "word_body:000",
-            0.49309464687343973
+            "char_body:euter",
+            1.0760590699049015
           ],
           [
-            "word_body:and",
-            0.4569715697866488
+            "char_body:eute",
+            1.0707194162740572
           ],
           [
-            "word_body:he",
-            0.4428842443668744
+            "char_body:uters",
+            1.0654775523183533
           ],
           [
-            "word_body:to do",
-            0.4240739098383446
+            "char_body:reu",
+            1.0574218711688137
           ],
           [
-            "word_body:debt",
-            0.4156301230642232
+            "char_body:s) ",
+            1.0465823491231108
           ],
           [
-            "word_body:60",
-            0.41522186976399633
+            "char_body:) -",
+            1.0413824288522056
           ],
           [
-            "word_body:three",
-            0.4111194368468763
+            "char_body:uter",
+            1.0365662660317039
           ],
           [
-            "word_body:still",
-            0.409532159217626
+            "char_body:) - ",
+            1.034884488083663
           ],
           [
-            "word_body:georgia",
-            0.40663369007218103
+            "char_body:s) - ",
+            1.0292819189114988
           ],
           [
-            "word_body:corporations",
-            0.3907610951925229
+            "char_body:s) -",
+            1.0292819189114988
           ],
           [
-            "word_body:while the",
-            0.3855436391183845
+            "char_body:rs) -",
+            1.028888404198341
           ],
           [
-            "word_body:money from",
-            0.3808064693904395
+            "char_body:(reu",
+            1.0238078220527962
           ],
           [
-            "word_body:up to",
-            0.3801025988595335
+            "char_body:(reut",
+            1.0238078220527962
           ],
           [
-            "word_body:when we",
-            0.37502390753849846
+            "char_body:ters)",
+            1.0167986682876535
           ],
           [
-            "word_body:average",
-            0.3692037175611846
+            "char_body:ers) ",
+            1.0144195583241953
           ],
           [
-            "word_body:times",
-            0.36737537882211446
+            "char_body:(re",
+            1.0139817029628926
           ],
           [
-            "word_body:american",
-            0.3612420298426661
+            "char_body:rs) ",
+            1.012128143438964
           ],
           [
-            "word_body:cut",
-            0.3600512831104216
+            "char_body:ers)",
+            1.0107962013709022
           ],
           [
-            "word_body:it was",
-            0.3580569975870132
+            "char_body:rs)",
+            1.001475864038021
           ],
           [
-            "word_body:twenty",
-            0.34654040177000267
+            "char_body: (reu",
+            0.9107244988062133
           ],
           [
-            "word_body:has",
-            0.34574311442240974
+            "char_body: (re",
+            0.9061596392523099
           ],
           [
-            "word_body:million",
-            0.3396867069658597
+            "char_body:. “",
+            0.9036812772378504
           ],
           [
-            "word_body:says donald",
-            0.33842138660771426
+            "char_body:,” ",
+            0.8657987994552063
           ],
           [
-            "word_body:ohio",
-            0.33536587858019645
+            "char_body: (r",
+            0.8614972331801679
           ]
         ],
         "negative_fake": [
           [
-            "word_body:america",
-            -0.47960264438476646
+            "word_title:video",
+            -3.000251306558577
           ],
           [
-            "word_body:obama",
-            -0.4673224776859233
+            "word_title:breaking",
+            -1.312849314812332
           ],
           [
-            "word_body:your",
-            -0.4421040541214438
+            "word_body:via",
+            -1.288418007400184
           ],
           [
-            "word_body:of those",
-            -0.4113973388461831
+            "word_title:the",
+            -1.2377805048508617
           ],
           [
-            "word_body:stop",
-            -0.38976471805488877
+            "char_body:.th",
+            -1.2016835251360711
           ],
           [
-            "word_body:walker",
-            -0.38528408791327234
+            "char_body:.the",
+            -1.1540156988743384
           ],
           [
-            "word_body:scott walker",
-            -0.3831231340284698
+            "char_body:.the ",
+            -1.1440330985790035
           ],
           [
-            "word_body:this is",
-            -0.38207235374156534
+            "word_title:hillary",
+            -1.0972828651444024
           ],
           [
-            "word_body:ever",
-            -0.3798054545261306
+            "char_body: s ",
+            -1.0643201236117432
           ],
           [
-            "word_body:no",
-            -0.3725973444815339
+            "word_title:obama",
+            -0.8975395144849523
           ],
           [
-            "word_body:seven years",
-            -0.37009658293040826
+            "word_title:and",
+            -0.8640783120531098
           ],
           [
-            "word_body:wisconsin",
-            -0.36995284615222723
+            "word_body:read more",
+            -0.8218265069615581
           ],
           [
-            "word_body:white",
-            -0.36982662992116655
+            "word_title:us",
+            -0.8066718404513826
           ],
           [
-            "word_body:that are",
-            -0.36894322361537274
+            "word_title:is",
+            -0.8006429382029205
           ],
           [
-            "word_body:care law",
-            -0.36402770350698777
+            "word_title:just",
+            -0.7811540620142412
           ],
           [
-            "word_body:illegals",
-            -0.3575881194902692
+            "word_title:watch",
+            -0.781064133132966
           ],
           [
-            "word_body:scott",
-            -0.3517435152086443
+            "word_title:this",
+            -0.7256111582166797
           ],
           [
-            "word_body:million from",
-            -0.3516356499824461
+            "word_title:america",
+            -0.6422407422623763
           ],
           [
-            "word_body:largest tax",
-            -0.35157979288381397
+            "word_body:image",
+            -0.6280201239523547
           ],
           [
-            "word_body:price",
-            -0.3483275465751976
+            "word_body:the us",
+            -0.6256579518153462
           ],
           [
-            "word_body:plan",
-            -0.34641210399461064
+            "word_title:muslim",
+            -0.6215597814677957
           ],
           [
-            "word_body:out",
-            -0.3447285995966045
+            "word_title:gop",
+            -0.6186269140475431
           ],
           [
-            "word_body:has been",
-            -0.34240956572909387
+            "word_title:you",
+            -0.6084432011607179
           ],
           [
-            "word_body:lost their",
-            -0.33923701763029745
+            "char_body: t ",
+            -0.6081060389532295
           ],
           [
-            "word_body:care",
-            -0.33578460005546956
+            "word_title:to",
+            -0.6029609685134946
           ],
           [
-            "word_body:billion to",
-            -0.33462542418124325
+            "char_body:n t ",
+            -0.6020506294079689
           ],
           [
-            "word_body:over 200",
-            -0.3295910814540675
+            "word_body:featured image",
+            -0.6014910103349601
           ],
           [
-            "word_body:the president",
-            -0.32576463879092404
+            "char_body:via",
+            -0.5995934350199159
           ],
           [
-            "word_body:after the",
-            -0.32443424753288763
+            "word_body:featured",
+            -0.5987835069449828
           ],
           [
-            "word_body:showed",
-            -0.3237151953356042
+            "word_body:read",
+            -0.5934290220504117
           ]
         ]
       }
@@ -632,6 +632,19 @@
           ],
           "max_features": 300000,
           "min_df": 3,
+          "max_df": 0.95,
+          "sublinear_tf": true
+        },
+        {
+          "name": "word_title",
+          "column": "title_clean",
+          "analyzer": "word",
+          "ngram_range": [
+            1,
+            2
+          ],
+          "max_features": 50000,
+          "min_df": 2,
           "max_df": 0.95,
           "sublinear_tf": true
         }

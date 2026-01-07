@@ -1,0 +1,584 @@
+{
+  "directions": {
+    "articles_to_liar": {
+      "n_train": 44888,
+      "n_test": 1268,
+      "feature_dim": 550000,
+      "models": {
+        "logreg": {
+          "metrics": {
+            "accuracy": 0.4353312302839117,
+            "precision": 0.6086956521739131,
+            "recall": 0.019417475728155338,
+            "f1": 0.03763440860215053,
+            "roc_auc": 0.5695877399610028,
+            "avg_precision": 0.6219086801025007
+          },
+          "confusion_matrix": [
+            [
+              538,
+              9
+            ],
+            [
+              707,
+              14
+            ]
+          ],
+          "error_analysis": {
+            "n_errors": 716,
+            "n_false_positive": 9,
+            "n_false_negative": 707,
+            "mean_len_error": 109.37290502793296,
+            "mean_len_correct": 105.46557971014492,
+            "errors_path": "C:\\Users\\zayke\\fake_news_ml_ai_project\\artifacts\\cross_dataset\\errors_articles_to_liar_logreg.csv"
+          },
+          "top_features": {
+            "positive_real": [
+              [
+                "word_body:reuters",
+                8.259946824611756
+              ],
+              [
+                "word_body:said",
+                4.623174542068215
+              ],
+              [
+                "char_body:’s ",
+                4.357115030006606
+              ],
+              [
+                "char_body: - ",
+                4.230802063726766
+              ],
+              [
+                "char_body:reut",
+                3.772850543777526
+              ],
+              [
+                "char_body:reute",
+                3.760563667455666
+              ],
+              [
+                "char_body:euter",
+                3.759133971710019
+              ],
+              [
+                "char_body:eute",
+                3.757870286288754
+              ],
+              [
+                "char_body:reu",
+                3.752018572434562
+              ],
+              [
+                "char_body:eut",
+                3.7379348674817803
+              ],
+              [
+                "char_body:uters",
+                3.7315925283831497
+              ],
+              [
+                "word_title:says",
+                3.700237903453504
+              ],
+              [
+                "char_body:uter",
+                3.699601922105048
+              ],
+              [
+                "char_body:) -",
+                3.5267592539785535
+              ],
+              [
+                "char_body:) - ",
+                3.5264316945924907
+              ],
+              [
+                "char_body:s) -",
+                3.5141850603788867
+              ],
+              [
+                "char_body:s) - ",
+                3.5141014330051963
+              ],
+              [
+                "char_body:rs) -",
+                3.513240508807085
+              ],
+              [
+                "char_body:(reu",
+                3.502949343794741
+              ],
+              [
+                "char_body:(reut",
+                3.502949343794741
+              ],
+              [
+                "char_body:(re",
+                3.501467576120961
+              ],
+              [
+                "char_body:ters)",
+                3.4893538136381124
+              ],
+              [
+                "char_body:ers) ",
+                3.4703997930967314
+              ],
+              [
+                "char_body:rs) ",
+                3.459015758517906
+              ],
+              [
+                "char_body:ers)",
+                3.4560182711559806
+              ],
+              [
+                "char_body:rs)",
+                3.436426996966529
+              ],
+              [
+                "char_body: (reu",
+                3.228274490906928
+              ],
+              [
+                "char_body: (re",
+                3.226578037694262
+              ],
+              [
+                "char_body:. “",
+                3.1968131526669885
+              ],
+              [
+                "char_body:s) ",
+                3.152987945738187
+              ]
+            ],
+            "negative_fake": [
+              [
+                "word_title:video",
+                -7.809502808627356
+              ],
+              [
+                "word_title:breaking",
+                -4.221677847980933
+              ],
+              [
+                "word_body:via",
+                -3.745300949446668
+              ],
+              [
+                "word_title:the",
+                -3.5854125339316045
+              ],
+              [
+                "char_body:.th",
+                -3.3634957444904634
+              ],
+              [
+                "char_body:.the",
+                -3.2221849448746287
+              ],
+              [
+                "char_body:.the ",
+                -3.1789732438942093
+              ],
+              [
+                "word_title:hillary",
+                -3.003955892385234
+              ],
+              [
+                "word_title:obama",
+                -2.8850529321383465
+              ],
+              [
+                "word_title:and",
+                -2.649014605495785
+              ],
+              [
+                "char_body: s ",
+                -2.457301901150073
+              ],
+              [
+                "word_title:us",
+                -2.4537338889738014
+              ],
+              [
+                "word_title:just",
+                -2.3689280634665133
+              ],
+              [
+                "word_title:is",
+                -2.3627161038130904
+              ],
+              [
+                "word_body:read more",
+                -2.163642767416851
+              ],
+              [
+                "word_title:watch",
+                -2.0849705980586895
+              ],
+              [
+                "word_body:us",
+                -2.027939218629812
+              ],
+              [
+                "word_body:read",
+                -2.0012641378299576
+              ],
+              [
+                "word_title:muslim",
+                -1.9615384165374086
+              ],
+              [
+                "word_title:this",
+                -1.8887968221625364
+              ],
+              [
+                "word_body:this",
+                -1.8824137899950724
+              ],
+              [
+                "word_body:the us",
+                -1.880991067523499
+              ],
+              [
+                "char_body: t ",
+                -1.8653761258514896
+              ],
+              [
+                "char_body:n t ",
+                -1.8571327132754394
+              ],
+              [
+                "word_body:image",
+                -1.8013304839966249
+              ],
+              [
+                "word_title:gop",
+                -1.776521567190743
+              ],
+              [
+                "word_title:you",
+                -1.7636719020380913
+              ],
+              [
+                "word_title:president trump",
+                -1.7612909381927797
+              ],
+              [
+                "word_body:featured image",
+                -1.7267071078435503
+              ],
+              [
+                "char_body:t s ",
+                -1.7185053313685057
+              ]
+            ]
+          }
+        }
+      },
+      "train_dataset": "fake_true",
+      "test_dataset": "liar_test"
+    },
+    "liar_to_articles": {
+      "n_train": 11466,
+      "n_test": 44888,
+      "feature_dim": 105115,
+      "models": {
+        "logreg": {
+          "metrics": {
+            "accuracy": 0.5706424879700588,
+            "precision": 0.5293972467503977,
+            "recall": 0.901386748844376,
+            "f1": 0.6670352262322271,
+            "roc_auc": 0.6732985300082723,
+            "avg_precision": 0.6298440356875951
+          },
+          "confusion_matrix": [
+            [
+              6310,
+              17161
+            ],
+            [
+              2112,
+              19305
+            ]
+          ],
+          "error_analysis": {
+            "n_errors": 19273,
+            "n_false_positive": 17161,
+            "n_false_negative": 2112,
+            "mean_len_error": 2703.8287241218286,
+            "mean_len_correct": 2408.794846769471,
+            "errors_path": "C:\\Users\\zayke\\fake_news_ml_ai_project\\artifacts\\cross_dataset\\errors_liar_to_articles_logreg.csv"
+          },
+          "top_features": {
+            "positive_real": [
+              [
+                "word_body:than",
+                1.637328652595056
+              ],
+              [
+                "word_body:since",
+                1.4049595009824083
+              ],
+              [
+                "word_body:countries",
+                1.3292153163345903
+              ],
+              [
+                "word_body:more",
+                1.3255014494154598
+              ],
+              [
+                "word_body:day",
+                1.2535976450340063
+              ],
+              [
+                "word_body:of",
+                1.2197620017200805
+              ],
+              [
+                "word_body:000",
+                1.1447102681623256
+              ],
+              [
+                "word_body:and",
+                1.0800090117533532
+              ],
+              [
+                "word_body:he",
+                1.0445318155661203
+              ],
+              [
+                "word_body:debt",
+                1.020201941857146
+              ],
+              [
+                "word_body:60",
+                1.0033355685060432
+              ],
+              [
+                "word_body:to do",
+                0.9952446627438688
+              ],
+              [
+                "word_body:still",
+                0.9951580484403487
+              ],
+              [
+                "word_body:three",
+                0.965773688697181
+              ],
+              [
+                "word_body:georgia",
+                0.9543338091508526
+              ],
+              [
+                "word_body:while the",
+                0.9513766909342026
+              ],
+              [
+                "word_body:up to",
+                0.8943460516778151
+              ],
+              [
+                "word_body:average",
+                0.8913123027174336
+              ],
+              [
+                "word_body:money from",
+                0.8876018440334845
+              ],
+              [
+                "word_body:corporations",
+                0.8872173065913719
+              ],
+              [
+                "word_body:times",
+                0.8855169507732151
+              ],
+              [
+                "word_body:american",
+                0.8750201830834653
+              ],
+              [
+                "word_body:million",
+                0.8514740279994448
+              ],
+              [
+                "word_body:cut",
+                0.844783915508034
+              ],
+              [
+                "word_body:when we",
+                0.8402490337335768
+              ],
+              [
+                "word_body:twenty",
+                0.8266584224517728
+              ],
+              [
+                "word_body:says scott",
+                0.8202566622793241
+              ],
+              [
+                "word_body:ohio",
+                0.8074599976253816
+              ],
+              [
+                "word_body:it was",
+                0.8055600061374354
+              ],
+              [
+                "word_body:has",
+                0.7980209137740716
+              ]
+            ],
+            "negative_fake": [
+              [
+                "word_body:america",
+                -1.1033283138381542
+              ],
+              [
+                "word_body:your",
+                -1.0600440775339486
+              ],
+              [
+                "word_body:obama",
+                -1.0509501352100257
+              ],
+              [
+                "word_body:of those",
+                -0.9892145642894119
+              ],
+              [
+                "word_body:care law",
+                -0.9130219130389404
+              ],
+              [
+                "word_body:scott walker",
+                -0.9090153898944383
+              ],
+              [
+                "word_body:this is",
+                -0.8996717831208632
+              ],
+              [
+                "word_body:walker",
+                -0.8981480381470154
+              ],
+              [
+                "word_body:ever",
+                -0.895747458503485
+              ],
+              [
+                "word_body:stop",
+                -0.8897291517121647
+              ],
+              [
+                "word_body:seven years",
+                -0.8857231835565512
+              ],
+              [
+                "word_body:illegals",
+                -0.8743910953954523
+              ],
+              [
+                "word_body:wisconsin",
+                -0.8693020354915413
+              ],
+              [
+                "word_body:no",
+                -0.8614622991921117
+              ],
+              [
+                "word_body:that are",
+                -0.8419825536304812
+              ],
+              [
+                "word_body:largest tax",
+                -0.8417900405831833
+              ],
+              [
+                "word_body:million from",
+                -0.8349777621637823
+              ],
+              [
+                "word_body:price",
+                -0.8247597206269487
+              ],
+              [
+                "word_body:scott",
+                -0.8128310808442933
+              ],
+              [
+                "word_body:white",
+                -0.8072551884439677
+              ],
+              [
+                "word_body:billion to",
+                -0.7911823245517304
+              ],
+              [
+                "word_body:has been",
+                -0.7908545572288694
+              ],
+              [
+                "word_body:care",
+                -0.7730552065415098
+              ],
+              [
+                "word_body:sponsored",
+                -0.7673032663917407
+              ],
+              [
+                "word_body:lost their",
+                -0.7648886089125387
+              ],
+              [
+                "word_body:over 200",
+                -0.7641992281517032
+              ],
+              [
+                "word_body:plan",
+                -0.7641193877166215
+              ],
+              [
+                "word_body:after the",
+                -0.762083708113747
+              ],
+              [
+                "word_body:will",
+                -0.7588745825839692
+              ],
+              [
+                "word_body:out",
+                -0.7587657216490609
+              ]
+            ]
+          }
+        }
+      },
+      "train_dataset": "liar_train+valid",
+      "test_dataset": "fake_true"
+    }
+  },
+  "config": {
+    "models": [
+      "logreg"
+    ],
+    "C_lr": 1.0,
+    "C_svm": 1.0,
+    "calibrated": true
+  },
+  "ethical_limitations": [
+    "Lexical cues can correlate with style or topic rather than factuality.",
+    "Dataset shift can drive errors when training on articles and testing on claims.",
+    "Models ignore evidence and context, so they do not verify claims.",
+    "Prediction errors can disproportionately affect speakers or groups."
+  ]
+}

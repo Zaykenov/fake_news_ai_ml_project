@@ -1,0 +1,94 @@
+{
+  "dataset": "fake_true",
+  "method": "sigmoid",
+  "results": {
+    "lr_uncal": {
+      "metrics": {
+        "accuracy": 0.9987747828024058,
+        "precision": 0.9981347633480998,
+        "recall": 0.9992997198879552,
+        "f1": 0.9987169019013181,
+        "roc_auc": 0.9999937839075411,
+        "avg_precision": 0.9999931730309218
+      },
+      "confusion_matrix": [
+        [
+          4686,
+          8
+        ],
+        [
+          3,
+          4281
+        ]
+      ],
+      "best_threshold_f1": 0.5499999999999999,
+      "best_f1_at_threshold": 0.9990660751809479
+    },
+    "lr_cal": {
+      "metrics": {
+        "accuracy": 0.9984406326576075,
+        "precision": 0.9979011194029851,
+        "recall": 0.9988328664799253,
+        "f1": 0.9983667755482968,
+        "roc_auc": 0.999987617543822,
+        "avg_precision": 0.9999864076131622
+      },
+      "confusion_matrix": [
+        [
+          4685,
+          9
+        ],
+        [
+          5,
+          4279
+        ]
+      ],
+      "best_threshold_f1": 0.49999999999999994,
+      "best_f1_at_threshold": 0.9983667755482968
+    },
+    "svm_uncal": {
+      "metrics": {
+        "accuracy": 0.9998886166184006,
+        "precision": 0.9997666277712952,
+        "recall": 1.0,
+        "f1": 0.9998833002684094,
+        "roc_auc": 0.999999850813781,
+        "avg_precision": 0.9999998365359156
+      },
+      "confusion_matrix": [
+        [
+          4693,
+          1
+        ],
+        [
+          0,
+          4284
+        ]
+      ],
+      "best_threshold_f1": 0.05,
+      "best_f1_at_threshold": 0.9998833002684094
+    },
+    "svm_cal": {
+      "metrics": {
+        "accuracy": 0.9998886166184006,
+        "precision": 0.9997666277712952,
+        "recall": 1.0,
+        "f1": 0.9998833002684094,
+        "roc_auc": 0.9999997513563017,
+        "avg_precision": 0.9999997274962299
+      },
+      "confusion_matrix": [
+        [
+          4693,
+          1
+        ],
+        [
+          0,
+          4284
+        ]
+      ],
+      "best_threshold_f1": 0.39999999999999997,
+      "best_f1_at_threshold": 0.9998833002684094
+    }
+  }
+}

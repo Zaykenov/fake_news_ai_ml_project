@@ -1,0 +1,7 @@
+{
+  "dataset": "fake_true",
+  "seed": 42,
+  "test_size": 0.2,
+  "calibrated": true,
+  "results_path": "C:\\Users\\zayke\\fake_news_ml_ai_project\\artifacts\\tfidf_ablation\\tfidf_ablation_results.csv"
+}

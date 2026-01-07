@@ -74,8 +74,9 @@ def tune_linear_models(
     cfg: ModelConfig,
     *,
     scoring: str = "f1",
-    cv: int = 5,
+    cv: int = 3,
     refit: bool = True,
+    n_jobs: int = 1,
 ) -> Dict[str, object]:
     """
     Grid-searches LR and LinearSVC and returns best estimators (optionally calibrated afterward).
@@ -93,7 +94,15 @@ def tune_linear_models(
         "C": list(cfg.lr_C_grid),
         "penalty": ["l2", "l1"],
     }
-    lr_search = GridSearchCV(lr, lr_grid, scoring=scoring, cv=cv, n_jobs=-1, refit=refit)
+    lr_search = GridSearchCV(
+        lr,
+        lr_grid,
+        scoring=scoring,
+        cv=cv,
+        n_jobs=n_jobs,
+        refit=refit,
+        pre_dispatch=1,
+    )
     lr_search.fit(X, y)
     best_lr = lr_search.best_estimator_
     results["logreg"] = _maybe_calibrate(best_lr, X, y, cfg)
@@ -104,7 +113,15 @@ def tune_linear_models(
         "C": list(cfg.svm_C_grid),
         "loss": [cfg.svm_loss],
     }
-    svm_search = GridSearchCV(svm, svm_grid, scoring=scoring, cv=cv, n_jobs=-1, refit=refit)
+    svm_search = GridSearchCV(
+        svm,
+        svm_grid,
+        scoring=scoring,
+        cv=cv,
+        n_jobs=n_jobs,
+        refit=refit,
+        pre_dispatch=1,
+    )
     svm_search.fit(X, y)
     best_svm = svm_search.best_estimator_
     results["linear_svm"] = _maybe_calibrate(best_svm, X, y, cfg)

@@ -48,6 +48,8 @@ def main():
     ap.add_argument("--test_size", type=float, default=0.2)
     ap.add_argument("--top_k", type=int, default=30)
     ap.add_argument("--drop_duplicates", action="store_true", help="Drop exact duplicates using combined_clean.")
+    ap.add_argument("--cv", type=int, default=3, help="CV folds for grid search (lower saves memory).")
+    ap.add_argument("--n_jobs", type=int, default=1, help="Parallel jobs for grid search.")
     args = ap.parse_args()
 
     logger = get_logger("baseline")
@@ -95,7 +97,14 @@ def main():
 
     model_cfg = ModelConfig(calibrate=True)
     with timer("tune linear models", logger):
-        models = tune_linear_models(X_train, y_train, model_cfg, scoring="f1", cv=5)
+        models = tune_linear_models(
+            X_train,
+            y_train,
+            model_cfg,
+            scoring="f1",
+            cv=args.cv,
+            n_jobs=args.n_jobs,
+        )
 
     feature_names = fb.get_feature_names()
 

@@ -20,7 +20,7 @@ from src.preprocessing import (
     load_liar_splits,
     build_clean_columns,
 )
-from src.features import FeatureBuilder
+from src.features import FeatureBuilder, feature_config_for_liar
 from src.models import tune_linear_models, predict_scores
 from src.evaluation import compute_metrics
 from src.explainability import top_features_linear
@@ -117,6 +117,8 @@ def main():
             train_df, test_df = stratified_split_df(df, y, args.seed, args.test_size)
 
     feat_cfg = FeatureConfig()
+    if args.dataset == "liar":
+        feat_cfg = feature_config_for_liar(feat_cfg)
     fb = FeatureBuilder(feat_cfg)
 
     if args.dataset == "liar":

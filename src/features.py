@@ -79,3 +79,13 @@ class FeatureBuilder:
             slices.append((vdef.name, slice(start, start + n)))
             start += n
         return slices
+
+
+def feature_config_for_liar(cfg: FeatureConfig) -> FeatureConfig:
+    """
+    Restrict features to statement text (body_clean) for LIAR.
+    """
+    views = tuple(v for v in cfg.views if v.column == "body_clean")
+    if not views:
+        raise ValueError("No feature views found for column 'body_clean'.")
+    return FeatureConfig(views=views, enable_subject_view=cfg.enable_subject_view)

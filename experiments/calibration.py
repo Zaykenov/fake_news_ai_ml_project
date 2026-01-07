@@ -12,7 +12,7 @@ sys.path.append(str(ROOT))
 
 from src.config import DatasetConfig, FeatureConfig, ModelConfig, TextPreprocessConfig
 from src.preprocessing import TextPreprocessor, load_fake_true_dataset, load_liar_dataset, load_liar_splits, build_clean_columns
-from src.features import FeatureBuilder
+from src.features import FeatureBuilder, feature_config_for_liar
 from src.models import train_logistic_regression, train_linear_svm
 from src.evaluation import compute_metrics, find_best_threshold_f1, plot_roc, plot_precision_recall
 from src.utils import ensure_dir, get_logger, save_json, seed_everything, timer
@@ -60,6 +60,8 @@ def main():
     ds_cfg = DatasetConfig()
     tp = TextPreprocessor(TextPreprocessConfig())
     feat_cfg = FeatureConfig()
+    if args.dataset == "liar":
+        feat_cfg = feature_config_for_liar(feat_cfg)
 
     with timer("load data", logger):
         if args.dataset == "fake_true":

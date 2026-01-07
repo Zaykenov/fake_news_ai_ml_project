@@ -14,7 +14,7 @@ sys.path.append(str(ROOT))
 
 from src.config import DatasetConfig, FeatureConfig, ModelConfig, TextPreprocessConfig
 from src.preprocessing import TextPreprocessor, load_fake_true_dataset, load_liar_splits, build_clean_columns
-from src.features import FeatureBuilder
+from src.features import FeatureBuilder, feature_config_for_liar
 from src.models import train_logistic_regression, train_linear_svm
 from src.evaluation import compute_metrics
 from src.explainability import top_features_linear
@@ -208,6 +208,7 @@ def main() -> None:
     ds_cfg = DatasetConfig()
     tp = TextPreprocessor(TextPreprocessConfig())
     feat_cfg = FeatureConfig()
+    feat_cfg_liar = feature_config_for_liar(feat_cfg)
     model_cfg = ModelConfig(calibrate=not args.no_calibration)
 
     with timer("load Fake/True", logger):
@@ -268,7 +269,7 @@ def main() -> None:
             "liar_to_articles",
             train_df=liar_train_full,
             test_df=fake_true_df,
-            feat_cfg=feat_cfg,
+            feat_cfg=feat_cfg_liar,
             model_cfg=model_cfg,
             models=model_list,
             C_lr=args.C_lr,

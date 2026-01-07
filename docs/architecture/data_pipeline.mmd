@@ -1,19 +1,6 @@
-<!-- Data Pipeline -->
-# Data Pipeline
-
-This pipeline supports two datasets:
-- Fake/True news articles (article-level classification)
-- LIAR claims (claim-level truthfulness benchmark)
-
-## LIAR mapping rules
-
-- REAL: `true`, `mostly-true`, `half-true`
-- FAKE: `barely-true`, `false`, `pants-fire`
-- Input text: statement only (speaker/party/history removed)
-
-## Processing steps
-
-```mermaid
+%% Data Pipeline
+%% LIAR mapping: REAL={true, mostly-true, half-true}, FAKE={barely-true, false, pants-fire}
+%% Input text: statement only (speaker/party/history removed)
 flowchart TD
   A[Raw Data] --> B[Load + Parse]
   B --> C[Normalize Schema]
@@ -21,4 +8,3 @@ flowchart TD
   D --> E[Build Clean Columns\nbody_clean, title_clean, combined_clean]
   E --> F[Train/Test Split\nFake/True]
   E --> G[Official Splits\nLIAR train/valid/test]
-```

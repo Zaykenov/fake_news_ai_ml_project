@@ -1,11 +1,5 @@
-<!-- Experiments and Artifacts -->
-# Experiments and Artifacts
-
-Each experiment script produces structured outputs under `artifacts/`.
-
-## Experiment graph
-
-```mermaid
+%% Experiments and Artifacts
+%% Each experiment script produces structured outputs under artifacts/.
 flowchart LR
   A[baseline.py] --> B[baseline_results.json]
   A --> C[baseline.json]
@@ -18,10 +12,3 @@ flowchart LR
   M[cross_dataset.py] --> N[cross_dataset_results.json]
   M --> O[errors_*.csv]
   M --> P[analysis_notes.md]
-```
-
-## Outputs by purpose
-
-- **Metrics**: JSON/CSV summaries for comparison and reporting
-- **Diagnostics**: error samples and cross-dataset analysis notes
-- **Visualization**: ROC/PR plots and notebook charts

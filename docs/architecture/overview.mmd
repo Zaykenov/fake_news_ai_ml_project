@@ -1,0 +1,24 @@
+<!-- Architectural Overview -->
+# Architecture Overview
+
+This project is a classical ML pipeline for fake news detection and claim-level truthfulness
+classification using TF-IDF features and linear models.
+
+## High-level flow
+
+```mermaid
+flowchart LR
+  A[Raw Data\nFake/True CSVs\nLIAR TSVs] --> B[Preprocessing\nText cleaning + schema normalization]
+  B --> C[Feature Extraction\nMulti-view TF-IDF]
+  C --> D[Models\nLogReg / Linear SVM\nOptional calibration]
+  D --> E[Evaluation\nMetrics + plots]
+  E --> F[Artifacts\nJSON/CSV/PNGs]
+```
+
+## Core modules
+
+- `src/preprocessing.py`: dataset loading, label mapping, text cleaning
+- `src/features.py`: TF-IDF feature builder and LIAR-specific view selection
+- `src/models.py`: model training and tuning
+- `src/evaluation.py`: metrics and curve utilities
+- `experiments/`: runnable scripts that orchestrate the pipeline

@@ -1,0 +1,63 @@
+<!-- Component Map -->
+# Component Map
+
+```mermaid
+flowchart TB
+  subgraph Data
+    D1[Fake.csv]
+    D2[True.csv]
+    D3[train.tsv]
+    D4[valid.tsv]
+    D5[test.tsv]
+  end
+
+  subgraph Core["src/"]
+    P[preprocessing.py]
+    F[features.py]
+    M[models.py]
+    E[evaluation.py]
+    X[explainability.py]
+  end
+
+  subgraph Experiments["experiments/"]
+    B[baseline.py]
+    R[robustness.py]
+    C[calibration.py]
+    T[tfidf_ablation.py]
+    G[cross_dataset.py]
+  end
+
+  D1 --> P
+  D2 --> P
+  D3 --> P
+  D4 --> P
+  D5 --> P
+
+  P --> F --> M --> E
+  M --> X
+
+  B --> P
+  B --> F
+  B --> M
+  B --> E
+
+  R --> P
+  R --> F
+  R --> M
+  R --> E
+
+  C --> P
+  C --> F
+  C --> M
+  C --> E
+
+  T --> P
+  T --> F
+  T --> M
+  T --> E
+
+  G --> P
+  G --> F
+  G --> M
+  G --> E
+```

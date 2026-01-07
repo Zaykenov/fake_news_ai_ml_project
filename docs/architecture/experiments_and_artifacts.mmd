@@ -1,0 +1,27 @@
+<!-- Experiments and Artifacts -->
+# Experiments and Artifacts
+
+Each experiment script produces structured outputs under `artifacts/`.
+
+## Experiment graph
+
+```mermaid
+flowchart LR
+  A[baseline.py] --> B[baseline_results.json]
+  A --> C[baseline.json]
+  D[robustness.py] --> E[robustness_results.csv]
+  D --> F[robustness_summary.json]
+  G[calibration.py] --> H[calibration_results.json]
+  G --> I[roc_*.png / pr_*.png]
+  J[tfidf_ablation.py] --> K[tfidf_ablation_results.csv]
+  J --> L[tfidf_ablation_summary.json]
+  M[cross_dataset.py] --> N[cross_dataset_results.json]
+  M --> O[errors_*.csv]
+  M --> P[analysis_notes.md]
+```
+
+## Outputs by purpose
+
+- **Metrics**: JSON/CSV summaries for comparison and reporting
+- **Diagnostics**: error samples and cross-dataset analysis notes
+- **Visualization**: ROC/PR plots and notebook charts

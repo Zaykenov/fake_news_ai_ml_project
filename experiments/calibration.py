@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT))
 
 from src.config import DatasetConfig, FeatureConfig, ModelConfig, TextPreprocessConfig
-from src.preprocessing import TextPreprocessor, load_fake_true_dataset, load_liar_dataset, build_clean_columns
+from src.preprocessing import TextPreprocessor, load_fake_true_dataset, load_liar_dataset, load_liar_splits, build_clean_columns
 from src.features import FeatureBuilder
 from src.models import train_logistic_regression, train_linear_svm
 from src.evaluation import compute_metrics, find_best_threshold_f1, plot_roc, plot_precision_recall
@@ -41,9 +41,9 @@ def main():
     ap = argparse.ArgumentParser(description="Calibration and thresholding experiment.")
     ap.add_argument("--fake_csv", type=str, default=str(ROOT / "data/raw/Fake.csv"))
     ap.add_argument("--true_csv", type=str, default=str(ROOT / "data/raw/True.csv"))
-    ap.add_argument("--liar_train", type=str, default=str(ROOT / "data/raw/liar_train.csv"))
-    ap.add_argument("--liar_valid", type=str, default=str(ROOT / "data/raw/liar_valid.csv"))
-    ap.add_argument("--liar_test", type=str, default=str(ROOT / "data/raw/liar_test.csv"))
+    ap.add_argument("--liar_train", type=str, default=str(ROOT / "data/raw/train.tsv"))
+    ap.add_argument("--liar_valid", type=str, default=str(ROOT / "data/raw/valid.tsv"))
+    ap.add_argument("--liar_test", type=str, default=str(ROOT / "data/raw/test.tsv"))
     ap.add_argument("--dataset", type=str, choices=["fake_true", "liar", "combined"], default="fake_true")
     ap.add_argument("--artifacts_dir", type=str, default=str(ROOT / "artifacts/calibration"))
     ap.add_argument("--seed", type=int, default=42)
@@ -64,15 +64,23 @@ def main():
     with timer("load data", logger):
         if args.dataset == "fake_true":
             df = load_fake_true_dataset(args.fake_csv, args.true_csv, dataset_cfg=ds_cfg)
+            df = build_clean_columns(df, tp=tp, dataset_cfg=ds_cfg)
+            train_df, test_df = stratified_split(df, args.seed, args.test_size)
         elif args.dataset == "liar":
-            df = load_liar_dataset(args.liar_train, args.liar_valid, args.liar_test, dataset_cfg=ds_cfg)
+            train_df, _, test_df = load_liar_splits(
+                args.liar_train,
+                args.liar_valid,
+                args.liar_test,
+                dataset_cfg=ds_cfg,
+            )
+            train_df = build_clean_columns(train_df, tp=tp, dataset_cfg=ds_cfg)
+            test_df = build_clean_columns(test_df, tp=tp, dataset_cfg=ds_cfg)
         else:
             df_ft = load_fake_true_dataset(args.fake_csv, args.true_csv, dataset_cfg=ds_cfg)
             df_liar = load_liar_dataset(args.liar_train, args.liar_valid, args.liar_test, dataset_cfg=ds_cfg)
             df = pd.concat([df_ft, df_liar], ignore_index=True)
-
-    df = build_clean_columns(df, tp=tp, dataset_cfg=ds_cfg)
-    train_df, test_df = stratified_split(df, args.seed, args.test_size)
+            df = build_clean_columns(df, tp=tp, dataset_cfg=ds_cfg)
+            train_df, test_df = stratified_split(df, args.seed, args.test_size)
     y_train = train_df["label"].to_numpy(dtype=int)
     y_test = test_df["label"].to_numpy(dtype=int)
 

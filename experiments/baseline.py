@@ -6,6 +6,8 @@ from pathlib import Path
 import sys
 import pandas as pd
 import numpy as np
+from scipy.sparse import vstack
+from sklearn.model_selection import PredefinedSplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT))
@@ -15,6 +17,7 @@ from src.preprocessing import (
     TextPreprocessor,
     load_fake_true_dataset,
     load_liar_dataset,
+    load_liar_splits,
     build_clean_columns,
 )
 from src.features import FeatureBuilder
@@ -39,9 +42,9 @@ def main():
     ap = argparse.ArgumentParser(description="Baseline experiment: multi-view TF-IDF + tuned LR and Linear SVM.")
     ap.add_argument("--fake_csv", type=str, default=str(ROOT / "data/raw/Fake.csv"))
     ap.add_argument("--true_csv", type=str, default=str(ROOT / "data/raw/True.csv"))
-    ap.add_argument("--liar_train", type=str, default=str(ROOT / "data/raw/liar_train.csv"))
-    ap.add_argument("--liar_valid", type=str, default=str(ROOT / "data/raw/liar_valid.csv"))
-    ap.add_argument("--liar_test", type=str, default=str(ROOT / "data/raw/liar_test.csv"))
+    ap.add_argument("--liar_train", type=str, default=str(ROOT / "data/raw/train.tsv"))
+    ap.add_argument("--liar_valid", type=str, default=str(ROOT / "data/raw/valid.tsv"))
+    ap.add_argument("--liar_test", type=str, default=str(ROOT / "data/raw/test.tsv"))
     ap.add_argument("--dataset", type=str, choices=["fake_true", "liar", "combined"], default="fake_true")
     ap.add_argument("--artifacts_dir", type=str, default=str(ROOT / "artifacts/baseline"))
     ap.add_argument("--seed", type=int, default=42)
@@ -56,62 +59,97 @@ def main():
     seed_everything(args.seed)
 
     artifacts_dir = ensure_dir(args.artifacts_dir)
+    results_path = artifacts_dir / "baseline_results.json"
+    legacy_path = artifacts_dir / "baseline.json"
 
     ds_cfg = DatasetConfig()
     tp_cfg = TextPreprocessConfig()
     tr_cfg = TrainConfig(seed=args.seed, test_size=args.test_size)
 
     logger.info("Loading dataset: %s", args.dataset)
+    tp = TextPreprocessor(tp_cfg)
+    train_df = None
+    valid_df = None
+    test_df = None
+
     with timer("load data", logger):
         if args.dataset == "fake_true":
             df = load_fake_true_dataset(args.fake_csv, args.true_csv, dataset_cfg=ds_cfg)
+            with timer("build clean columns", logger):
+                df = build_clean_columns(df, tp=tp, dataset_cfg=ds_cfg)
+            if args.drop_duplicates:
+                before = len(df)
+                df = df.drop_duplicates(subset=["combined_clean"]).reset_index(drop=True)
+                logger.info("Dropped duplicates: %d -> %d", before, len(df))
+            y = df["label"].to_numpy(dtype=int)
+            train_df, test_df = stratified_split_df(df, y, args.seed, args.test_size)
         elif args.dataset == "liar":
-            df = load_liar_dataset(args.liar_train, args.liar_valid, args.liar_test, dataset_cfg=ds_cfg)
+            train_df, valid_df, test_df = load_liar_splits(
+                args.liar_train,
+                args.liar_valid,
+                args.liar_test,
+                dataset_cfg=ds_cfg,
+            )
+            with timer("build clean columns", logger):
+                train_df = build_clean_columns(train_df, tp=tp, dataset_cfg=ds_cfg)
+                valid_df = build_clean_columns(valid_df, tp=tp, dataset_cfg=ds_cfg)
+                test_df = build_clean_columns(test_df, tp=tp, dataset_cfg=ds_cfg)
+            if args.drop_duplicates:
+                for name, df_part in [("train", train_df), ("valid", valid_df)]:
+                    before = len(df_part)
+                    df_part = df_part.drop_duplicates(subset=["combined_clean"]).reset_index(drop=True)
+                    logger.info("Dropped duplicates (%s): %d -> %d", name, before, len(df_part))
+                    if name == "train":
+                        train_df = df_part
+                    else:
+                        valid_df = df_part
         else:
             df_ft = load_fake_true_dataset(args.fake_csv, args.true_csv, dataset_cfg=ds_cfg)
             df_liar = load_liar_dataset(args.liar_train, args.liar_valid, args.liar_test, dataset_cfg=ds_cfg)
             df = pd.concat([df_ft, df_liar], ignore_index=True)
-
-    tp = TextPreprocessor(tp_cfg)
-    with timer("build clean columns", logger):
-        df = build_clean_columns(df, tp=tp, dataset_cfg=ds_cfg)
-
-    if args.drop_duplicates:
-        before = len(df)
-        df = df.drop_duplicates(subset=["combined_clean"]).reset_index(drop=True)
-        logger.info("Dropped duplicates: %d -> %d", before, len(df))
-
-    y = df["label"].to_numpy(dtype=int)
-
-    train_df, test_df = stratified_split_df(df, y, args.seed, args.test_size)
-    y_train = train_df["label"].to_numpy(dtype=int)
-    y_test = test_df["label"].to_numpy(dtype=int)
+            with timer("build clean columns", logger):
+                df = build_clean_columns(df, tp=tp, dataset_cfg=ds_cfg)
+            if args.drop_duplicates:
+                before = len(df)
+                df = df.drop_duplicates(subset=["combined_clean"]).reset_index(drop=True)
+                logger.info("Dropped duplicates: %d -> %d", before, len(df))
+            y = df["label"].to_numpy(dtype=int)
+            train_df, test_df = stratified_split_df(df, y, args.seed, args.test_size)
 
     feat_cfg = FeatureConfig()
     fb = FeatureBuilder(feat_cfg)
 
-    with timer("fit_transform features (train)", logger):
-        X_train = fb.fit_transform(train_df)
-    with timer("transform features (test)", logger):
-        X_test = fb.transform(test_df)
+    if args.dataset == "liar":
+        with timer("fit_transform features (train)", logger):
+            X_train = fb.fit_transform(train_df)
+        with timer("transform features (valid)", logger):
+            X_valid = fb.transform(valid_df)
+        with timer("transform features (test)", logger):
+            X_test = fb.transform(test_df)
+        y_train = train_df["label"].to_numpy(dtype=int)
+        y_valid = valid_df["label"].to_numpy(dtype=int)
+        y_test = test_df["label"].to_numpy(dtype=int)
+        X_tv = vstack([X_train, X_valid], format="csr")
+        y_tv = np.concatenate([y_train, y_valid])
+        test_fold = np.concatenate([np.full(len(y_train), -1), np.zeros(len(y_valid), dtype=int)])
+        cv = PredefinedSplit(test_fold)
+    else:
+        with timer("fit_transform features (train)", logger):
+            X_train = fb.fit_transform(train_df)
+        with timer("transform features (test)", logger):
+            X_test = fb.transform(test_df)
+        y_train = train_df["label"].to_numpy(dtype=int)
+        y_test = test_df["label"].to_numpy(dtype=int)
+        cv = args.cv
 
     model_cfg = ModelConfig(calibrate=True)
-    with timer("tune linear models", logger):
-        models = tune_linear_models(
-            X_train,
-            y_train,
-            model_cfg,
-            scoring="f1",
-            cv=args.cv,
-            n_jobs=args.n_jobs,
-        )
-
     feature_names = fb.get_feature_names()
 
     summary = {
         "dataset": args.dataset,
         "n_train": int(len(train_df)),
         "n_test": int(len(test_df)),
+        "n_valid": int(len(valid_df)) if valid_df is not None else 0,
         "feature_dim": int(X_train.shape[1]),
         "models": {},
         "config": {
@@ -122,6 +160,32 @@ def main():
             "model_config": model_cfg,
         },
     }
+
+    def save_summary() -> None:
+        save_json(results_path, summary)
+        save_json(legacy_path, summary)
+
+    save_summary()
+
+    with timer("tune linear models", logger):
+        if args.dataset == "liar":
+            models = tune_linear_models(
+                X_tv,
+                y_tv,
+                model_cfg,
+                scoring="f1",
+                cv=cv,
+                n_jobs=args.n_jobs,
+            )
+        else:
+            models = tune_linear_models(
+                X_train,
+                y_train,
+                model_cfg,
+                scoring="f1",
+                cv=cv,
+                n_jobs=args.n_jobs,
+            )
 
     for name, model in models.items():
         y_pred, y_prob = predict_scores(model, X_test)
@@ -145,11 +209,12 @@ def main():
             }
 
         summary["models"][name] = model_out
+        save_summary()
 
         logger.info("%s metrics: %s", name, res.metrics)
 
-    save_json(artifacts_dir / "baseline_results.json", summary)
-    logger.info("Saved: %s", artifacts_dir / "baseline_results.json")
+    logger.info("Saved: %s", results_path)
+    logger.info("Saved: %s", legacy_path)
 
 
 if __name__ == "__main__":

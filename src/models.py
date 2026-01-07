@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -74,7 +74,7 @@ def tune_linear_models(
     cfg: ModelConfig,
     *,
     scoring: str = "f1",
-    cv: int = 3,
+    cv: int | Any = 3,
     refit: bool = True,
     n_jobs: int = 1,
 ) -> Dict[str, object]:

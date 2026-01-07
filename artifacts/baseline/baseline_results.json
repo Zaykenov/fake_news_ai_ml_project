@@ -1,0 +1,91 @@
+{
+  "dataset": "fake_true",
+  "n_train": 35910,
+  "n_test": 8978,
+  "feature_dim": 550000,
+  "models": {},
+  "config": {
+    "seed": 42,
+    "test_size": 0.2,
+    "text_preprocess": {
+      "lowercase": true,
+      "strip_html": true,
+      "strip_urls": true,
+      "strip_emails": true,
+      "normalize_unicode": true,
+      "collapse_whitespace": true,
+      "remove_punctuation": false,
+      "remove_numbers": false,
+      "lemmatize": false,
+      "min_chars": 30
+    },
+    "feature_config": {
+      "views": [
+        {
+          "name": "word_body",
+          "column": "body_clean",
+          "analyzer": "word",
+          "ngram_range": [
+            1,
+            2
+          ],
+          "max_features": 200000,
+          "min_df": 2,
+          "max_df": 0.95,
+          "sublinear_tf": true
+        },
+        {
+          "name": "char_body",
+          "column": "body_clean",
+          "analyzer": "char",
+          "ngram_range": [
+            3,
+            5
+          ],
+          "max_features": 300000,
+          "min_df": 3,
+          "max_df": 0.95,
+          "sublinear_tf": true
+        },
+        {
+          "name": "word_title",
+          "column": "title_clean",
+          "analyzer": "word",
+          "ngram_range": [
+            1,
+            2
+          ],
+          "max_features": 50000,
+          "min_df": 2,
+          "max_df": 0.95,
+          "sublinear_tf": true
+        }
+      ],
+      "enable_subject_view": false
+    },
+    "model_config": {
+      "lr_solver": "liblinear",
+      "lr_max_iter": 2000,
+      "lr_class_weight": "balanced",
+      "svm_loss": "squared_hinge",
+      "svm_class_weight": "balanced",
+      "calibrate": true,
+      "calibration_method": "sigmoid",
+      "calibration_cv": 3,
+      "lr_C_grid": [
+        0.1,
+        0.3,
+        1.0,
+        3.0,
+        10.0
+      ],
+      "svm_C_grid": [
+        0.1,
+        0.3,
+        1.0,
+        3.0,
+        10.0
+      ]
+    }
+  }
+}

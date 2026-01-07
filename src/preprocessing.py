@@ -1,6 +1,7 @@
 # src/preprocessing.py
 from __future__ import annotations
 
+import csv
 import re
 import unicodedata
 from dataclasses import dataclass
@@ -140,46 +141,75 @@ def load_liar_dataset(
       positive (REAL): true, mostly-true, half-true
       negative (FAKE): barely-true, false, pants-fire
     """
-    def _load_one(path: Union[str, Path], split: str) -> pd.DataFrame:
+    train_df, valid_df, test_df = load_liar_splits(
+        train_csv,
+        valid_csv,
+        test_csv,
+        dataset_cfg=dataset_cfg,
+        sep=sep,
+    )
+    return pd.concat([train_df, valid_df, test_df], axis=0, ignore_index=True)
+
+
+def _load_liar_split(
+    path: Union[str, Path],
+    split: str,
+    *,
+    dataset_cfg: DatasetConfig,
+    sep: Optional[str],
+) -> pd.DataFrame:
+    sep = sep or "\t"
+    if sep == "\t":
+        df = pd.read_csv(
+            path,
+            sep=sep,
+            header=None,
+            quoting=csv.QUOTE_NONE,
+            engine="python",
+        )
+    else:
         df = read_csv_robust(path, sep=sep)
-        # If header row exists, keep as-is; otherwise rename by position.
-        if df.shape[1] != dataset_cfg.liar_num_columns:
-            # Try reading with header=None
+    # If header row exists, keep as-is; otherwise rename by position.
+    if df.shape[1] != dataset_cfg.liar_num_columns:
+        if sep == "\t":
+            df2 = pd.read_csv(
+                path,
+                sep=sep,
+                header=0,
+                quoting=csv.QUOTE_NONE,
+                engine="python",
+            )
+        else:
             df2 = read_csv_robust(path, sep=sep)
-            if df2.shape[1] == dataset_cfg.liar_num_columns:
-                df = df2
-            else:
-                raise ValueError(
-                    f"Expected {dataset_cfg.liar_num_columns} columns for LIAR, got {df.shape[1]} in {path}"
-                )
+        if df2.shape[1] == dataset_cfg.liar_num_columns:
+            df = df2
+        else:
+            raise ValueError(
+                f"Expected {dataset_cfg.liar_num_columns} columns for LIAR, got {df.shape[1]} in {path}"
+            )
 
-        # Rename columns by position
-        df = df.copy()
-        df.columns = [
-            "id",
-            "liar_label",
-            "statement",
-            "subject",
-            "speaker",
-            "speaker_job",
-            "state",
-            "party",
-            "barely_true_counts",
-            "false_counts",
-            "half_true_counts",
-            "mostly_true_counts",
-            "pants_on_fire_counts",
-            "context",
-        ]
-        df["split"] = split
-        return df
+    df = df.copy()
+    df.columns = [
+        "id",
+        "liar_label",
+        "statement",
+        "subject",
+        "speaker",
+        "speaker_job",
+        "state",
+        "party",
+        "barely_true_counts",
+        "false_counts",
+        "half_true_counts",
+        "mostly_true_counts",
+        "pants_on_fire_counts",
+        "context",
+    ]
+    df["split"] = split
+    return df
 
-    train_df = _load_one(train_csv, "train")
-    valid_df = _load_one(valid_csv, "valid")
-    test_df = _load_one(test_csv, "test")
-    df = pd.concat([train_df, valid_df, test_df], axis=0, ignore_index=True)
 
-    # Map LIAR labels to binary
+def _map_liar_to_binary(df: pd.DataFrame, dataset_cfg: DatasetConfig) -> pd.DataFrame:
     lab = df["liar_label"].map(normalize_label_str)
     pos = set(dataset_cfg.liar_binary_positive)
     neg = set(dataset_cfg.liar_binary_negative)
@@ -191,27 +221,56 @@ def load_liar_dataset(
             return dataset_cfg.label_fake
         return None
 
-    df["label"] = lab.map(_map_binary)
+    out = df.copy()
+    out["label"] = lab.map(_map_binary)
+    out = out.dropna(subset=["label"]).copy()
+    out["label"] = out["label"].astype(int)
+    return out
 
-    # Keep only rows mapped to binary
-    df = df.dropna(subset=["label"]).copy()
-    df["label"] = df["label"].astype(int)
 
-    # Conform to common schema
-    out = pd.DataFrame({
+def _liar_to_common_schema(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Reduce LIAR to statement-only text and strip metadata that can leak prior credibility.
+    """
+    return pd.DataFrame({
         "id": df["id"],
         "title": None,
         "text": df["statement"],
-        "subject": df["subject"],
+        "subject": None,
         "date": pd.NaT,
         "label": df["label"],
         "source_dataset": "liar",
-        "speaker": df["speaker"],
-        "context": df["context"],
-        "party": df["party"],
+        "speaker": None,
+        "context": None,
+        "party": None,
+        "split": df["split"],
     })
 
-    return out
+
+def load_liar_splits(
+    train_csv: Union[str, Path],
+    valid_csv: Union[str, Path],
+    test_csv: Union[str, Path],
+    *,
+    dataset_cfg: DatasetConfig = DatasetConfig(),
+    sep: Optional[str] = None,
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Loads LIAR splits and returns them in the common schema using statement text only.
+    """
+    train_df = _load_liar_split(train_csv, "train", dataset_cfg=dataset_cfg, sep=sep)
+    valid_df = _load_liar_split(valid_csv, "valid", dataset_cfg=dataset_cfg, sep=sep)
+    test_df = _load_liar_split(test_csv, "test", dataset_cfg=dataset_cfg, sep=sep)
+
+    train_df = _map_liar_to_binary(train_df, dataset_cfg)
+    valid_df = _map_liar_to_binary(valid_df, dataset_cfg)
+    test_df = _map_liar_to_binary(test_df, dataset_cfg)
+
+    return (
+        _liar_to_common_schema(train_df),
+        _liar_to_common_schema(valid_df),
+        _liar_to_common_schema(test_df),
+    )
 
 
 def build_clean_columns(
